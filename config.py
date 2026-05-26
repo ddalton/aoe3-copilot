@@ -14,24 +14,27 @@ WINDOW_TITLE = "Age of Empires III"
 # Soft confirmation only; verify the real name in Task Manager.
 GAME_EXE_HINT = "AoE3DE_s.exe"
 
-# --- HUD ROIs as FRACTIONS of the client area. THESE ARE PLACEHOLDERS. ---
-# Calibrate against calibration.png. The resource bar sits along the top;
-# the idle-villager badge is bottom-left in most layouts.
+# --- HUD ROIs as FRACTIONS of the client area. ---
+# Calibrated on a 3818x2032 client against the top resource bar (run
+# `python calibrate.py` to re-verify after a resolution/UI-scale change). Each
+# resource amount sits to the RIGHT of a boxed gather-rate counter, so the box
+# must frame only the stockpile number. The idle count is right of the Zzz icon.
 ROI = {
-    "food": (0.300, 0.006, 0.045, 0.030),
-    "wood": (0.355, 0.006, 0.045, 0.030),
-    "coin": (0.410, 0.006, 0.045, 0.030),
-    "pop":  (0.520, 0.006, 0.055, 0.030),   # reads "cur/max"
-    "idle": (0.020, 0.930, 0.040, 0.040),   # idle villager count badge
+    "food": (0.142, 0.012, 0.046, 0.035),
+    "wood": (0.214, 0.012, 0.046, 0.035),
+    "coin": (0.306, 0.012, 0.052, 0.035),
+    "pop":  (0.050, 0.012, 0.052, 0.035),   # reads "cur/max"
+    "idle": (0.410, 0.012, 0.032, 0.035),   # idle villager count (right of Zzz icon)
     "queue": (0.420, 0.880, 0.160, 0.060),  # TC training-queue strip in the command
-                                            # panel; calibrate to span the first 2-3 slots
+                                            # panel; NOT YET CALIBRATED -- use the
+                                            # "Cal. Villager Queue" button in a live game
 }
 
 # --- Hotkeys. VERIFY against your in-game keybindings (grid hotkeys vary). ---
 HOTKEYS = {
-    "select_all_tcs":        ("ctrl", "shift", "h"),  # default in AoE3 DE
-    "cycle_tc":              ("h",),   # cycle to next TC (centers camera) -- VERIFY
-    "train_villager":        ("q",),   # with TC selected (grid) -- VERIFY
+    "select_all_tcs":        ("ctrl", "shift", "t"),  # bind "Find all Town Centers" to this
+    "cycle_tc":              ("t",),   # "Find Town Center" (centers camera on next TC)
+    "train_villager":        ("v",),   # "Train Settler" with TC selected
     "select_idle_villager":  (".",),   # -- VERIFY / rebind
     "builder_control_group": ("9",),   # pre-assign ONE villager to group 9
     "build_menu":            ("a",),   # open build menu (grid) -- VERIFY

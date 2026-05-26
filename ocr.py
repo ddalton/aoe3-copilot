@@ -18,14 +18,27 @@ class HUDReader:
     def _engine(self):
         if self._ocr is None:
             from paddleocr import PaddleOCR
-            self._ocr = PaddleOCR(use_angle_cls=False, lang="en", show_log=False)
+            # PaddleOCR 3.x API: no show_log/use_angle_cls. The doc-orientation
+            # and unwarping stages are useless on tiny HUD crops, so disable them.
+            # enable_mkldnn=False avoids a oneDNN PIR-attribute crash in
+            # paddlepaddle 3.x CPU inference on some machines.
+            self._ocr = PaddleOCR(
+                lang="en",
+                use_textline_orientation=False,
+                use_doc_orientation_classify=False,
+                use_doc_unwarping=False,
+                enable_mkldnn=False,
+            )
         return self._ocr
 
     def _text(self, img):
-        result = self._engine().ocr(img, cls=False)
-        if not result or not result[0]:
+        # PaddleOCR 3.x: predict() returns OCRResult objects exposing rec_texts.
+        result = self._engine().predict(img)
+        if not result:
             return ""
-        return " ".join(line[1][0] for line in result[0])
+        res = result[0]
+        texts = res.get("rec_texts") if hasattr(res, "get") else None
+        return " ".join(texts) if texts else ""
 
     def _int(self, img):
         nums = _DIGITS.findall(self._text(img).replace(",", ""))
