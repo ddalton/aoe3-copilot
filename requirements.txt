@@ -1,0 +1,9 @@
+mss
+numpy
+pywin32
+psutil
+pydirectinput
+paddleocr
+paddlepaddle
+opencv-python
+keyboard

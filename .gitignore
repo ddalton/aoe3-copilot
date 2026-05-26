@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Co-pilot calibration artifacts (machine/resolution-specific)
+villager_icon.png
+calibration.png
+
+# OS
+.DS_Store
