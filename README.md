@@ -27,31 +27,65 @@ the live loop** — it's a deterministic, closed control loop.
 
 ## Quick start (after cloning on the Windows game PC)
 
-Run these in **PowerShell or Command Prompt** (not WSL). For the global
-pause/resume hotkeys to work, you may need to run the terminal **as
-Administrator** (the `keyboard` library installs a system-wide hook).
+Use the built-in **Windows Terminal / PowerShell** (Windows 11 already has it —
+no extra terminal needed). Do **not** use WSL. For the global pause/resume
+hotkeys to work, launch the terminal **as Administrator** (right-click Windows
+Terminal → "Run as administrator") — the `keyboard` library installs a
+system-wide hook.
 
-```bat
+**1. Check Python is installed:**
+
+```powershell
+python --version
+```
+
+If that errors, install **Python 3.9+** from python.org and tick
+**"Add python.exe to PATH"** during setup. Use the python.org build, not the
+Microsoft Store / WSL one.
+
+**2. Clone and enter the folder:**
+
+```powershell
 git clone https://github.com/ddalton/aoe3-copilot.git
 cd aoe3-copilot
+```
 
+**3. Create and activate a virtual environment (PowerShell):**
+
+```powershell
 python -m venv .venv
-.venv\Scripts\activate
+.venv\Scripts\Activate.ps1
+```
 
+If PowerShell blocks the activate script with an execution-policy error, run
+this once and retry the activate line:
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+```
+
+On **Command Prompt** instead of PowerShell, activate with
+`.venv\Scripts\activate.bat`.
+
+**4. Install dependencies** (first run downloads the PaddleOCR models, so you
+need an internet connection the first time, and it may take a minute):
+
+```powershell
 pip install -r requirements.txt
 ```
 
-> First run downloads the PaddleOCR models, so you need an internet connection
-> the first time (and it may take a minute).
+**5. Launch AoE3 DE** in **windowed/borderless at a locked resolution** and
+start a game.
 
-Then launch **AoE3 DE in windowed/borderless at a locked resolution**, start a
-game, and run:
+**6. Run the co-pilot:**
 
-```bat
+```powershell
 python main.py
 ```
 
-A small always-on-top panel appears. Do the one-time calibration below.
+A small always-on-top panel appears. Do the one-time calibration below. After
+that, each future session is just: open the folder, `.venv\Scripts\Activate.ps1`,
+`python main.py`.
 
 ## One-time calibration (per resolution/UI scale)
 
